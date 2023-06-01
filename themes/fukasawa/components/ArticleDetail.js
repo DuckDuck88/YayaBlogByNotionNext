@@ -1,5 +1,7 @@
+import TagItemMini from './TagItemMini'
 import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
+import ShareBar from '@/components/ShareBar'
 import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
@@ -33,7 +35,7 @@ export default function ArticleDetail(props) {
         <header className='animate__slideInDown animate__animated'>
 
           {/* 文章Title */}
-          <div className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
+          <div className="font-bold text-4xl text-black dark:text-white">
             {post.title}
           </div>
 
@@ -68,11 +70,15 @@ export default function ArticleDetail(props) {
                 </span>
               </>)}
 
-              <div className=" busuanzi_container_page_pv font-light mr-2">
-                <i className='mr-1 fas fa-eye' />
-                &nbsp;
-                <span className="mr-2 busuanzi_value_page_pv" />
-              </div>
+            <div className='my-2'>
+                {post.tagItems && (
+                    <div className="flex flex-nowrap overflow-x-auto">
+                        {post.tagItems.map(tag => (
+                            <TagItemMini key={tag.name} tag={tag} />
+                        ))}
+                    </div>
+                )}
+            </div>
             </div>
 
           </section>
@@ -82,6 +88,11 @@ export default function ArticleDetail(props) {
         {/* Notion文章主体 */}
         <section id='notion-article' className='px-1'>
           {post && <NotionPage post={post} />}
+        </section>
+
+        <section>
+           {/* 分享 */}
+           <ShareBar post={post} />
         </section>
 
         <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
