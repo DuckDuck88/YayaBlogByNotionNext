@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ -z "$1" ]; then
+    echo "Error: 请输入版本号."
+    echo "Usage: bash update-docker.sh <version>"
+    exit 1
+fi
+
 # 指定新版本号作为脚本参数
 NEW_VERSION=$1
 
